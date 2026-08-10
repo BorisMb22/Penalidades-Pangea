@@ -711,6 +711,7 @@
       </div>
       <div class="registry-count" id="registryCount">0 expedientes</div>
       <div class="registry-toolbar__actions">
+        <button class="btn btn-ghost btn-sm" id="refreshBtn" title="Releer la carpeta conectada">↻ Actualizar</button>
         <button class="btn btn-ghost btn-sm control-only" id="importBtn">⇪ Importar Excel</button>
         <input type="file" id="importInput" accept=".xlsx,.xls,.csv">
         <button class="btn btn-gold btn-sm" id="exportBtn">⇩ Exportar a Excel</button>
@@ -1714,6 +1715,16 @@
   $('#exportBtn').addEventListener('click', () => {
     const filtered = getFiltered();
     exportToExcel(filtered, 'reporte_cartas_penalidad');
+  });
+
+  $('#refreshBtn').addEventListener('click', async () => {
+    if(!rootHandle){ showToast('Primero conecta tu carpeta de OneDrive.'); return; }
+    await scanRecords();
+    selectedIds.clear();
+    populateDatalists();
+    populateFilterSelects();
+    renderAll();
+    showToast(`Carpeta releída: ${records.length} expediente(s) encontrados.`);
   });
 
   $('#importBtn').addEventListener('click', () => { if(isControl()) $('#importInput').click(); });
