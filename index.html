@@ -684,10 +684,10 @@
         </div>
 
         <div class="form-footer">
-          <p>Al registrar, el expediente quedará numerado y disponible en el Registro de expedientes con el status inicial declarado.</p>
+          <p id="formFooterHint">Al registrar, el expediente quedará numerado y disponible en el Registro de expedientes con el status inicial declarado.</p>
           <div style="display:flex; gap:10px;">
             <button type="button" class="btn btn-ghost" id="clearFormBtn">Limpiar formulario</button>
-            <button type="submit" class="btn btn-primary">Registrar expediente</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Registrar expediente</button>
           </div>
         </div>
       </form>
@@ -1283,6 +1283,9 @@
     if(head) head.textContent = 'Solicitud de registro de carta de penalidad';
     $('#formLockBanner').style.display = 'none';
     form.classList.remove('form-locked');
+    $('#clearFormBtn').style.display = '';
+    $('#submitBtn').textContent = 'Registrar expediente';
+    $('#formFooterHint').textContent = 'Al registrar, el expediente quedará numerado y disponible en el Registro de expedientes con el status inicial declarado.';
   }
   async function refreshFolioPreview(){
     if(!rootHandle) return;
@@ -1662,6 +1665,9 @@
     setTab('form');
     const head = $('.doc-card__head h2');
     if(head) head.textContent = `Editando expediente ${r.folio}`;
+    $('#clearFormBtn').style.display = 'none';
+    $('#submitBtn').textContent = 'Actualizar Expediente';
+    $('#formFooterHint').textContent = 'Se actualizará la información de este expediente sin cambiar su número de folio.';
   });
 
   $('#modalDuplicateBtn').addEventListener('click', () => {
@@ -1674,6 +1680,9 @@
     refreshFolioPreview();
     const head = $('.doc-card__head h2');
     if(head) head.textContent = 'Solicitud de registro de carta de penalidad';
+    $('#clearFormBtn').style.display = '';
+    $('#submitBtn').textContent = 'Registrar expediente';
+    $('#formFooterHint').textContent = 'Al registrar, el expediente quedará numerado y disponible en el Registro de expedientes con el status inicial declarado.';
     showToast('Datos copiados al formulario. Complete las fechas del nuevo expediente.');
   });
 
